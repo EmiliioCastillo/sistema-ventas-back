@@ -45,4 +45,4 @@ Seccion para contactar dejando mensaje y enviando a respectivo usuario.
 Características del sistema:
 El sistema se encuentra desarrollado con el lenguaje de programación Java, utilizando Spring Framework, Spring Security  y se ha utilizado MYSQL como gestor de base de datos.
 
-Se ha utilizado el tipico patron SPRING MVC, THYMELEAF para su desarrollo por motivos puramente practicos
+Se ha utilizado el  patron RestFul, React.js
