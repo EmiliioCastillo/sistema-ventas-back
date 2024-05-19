@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/css/styleslogin.css" th:href="@{css/styleslogin.css}">
+</head>
+
+
+<body>
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <form class="login" th:action="@{/login}" method="post">
+                <div th:if="${param.error}">
+                    <div class = "alert alert-danger">
+                        Error al logearse!
+                    </div>
+                </div>
+                <div th:if="${param.logout}">
+                    <div class = "alert alert-info">
+                        Ha cerrado sesion!
+                    </div>
+                </div>
+                <div class="login__field">
+                    <i class="login__icon fas fa-user"></i>
+                    <input type="text" id="username" name="username" class="login__input" required autofocus="autofocus" placeholder="Correo o usuario: ">
+                </div>
+                <div class="login__field">
+                    <i class="login__icon fas fa-lock"></i>
+                    <input type="password" id="password" name="password" class="login__input" required autofocus="autofocus" placeholder="Contraseña: ">
+                </div>
+                <button class="button login__submit">
+                    <a class="button__text" type="submit" id="login-submit">Sign In</a>
+                    <i class="button__icon fas fa-chevron-right"></i>
+                </button>
+                <br>
+                <h4 class="text-center text-muted mt-5 mb-0">No tiene cuenta? <a th:href="@{/registro}"
+                  class="fw-bold text-body"><u>Registrate aqui</u></a></h4>
+            </form>
+            <div class="social-login">
+                <h3><a>Siganos</a></h3>
+                <div class="social-icons">
+                    <a href="#" class="social-login__icon fab fa-instagram"></a>
+                    <a href="#" class="social-login__icon fab fa-facebook"></a>
+                    <a href="#" class="social-login__icon fab fa-twitter"></a>
+                </div>
+            </div>
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

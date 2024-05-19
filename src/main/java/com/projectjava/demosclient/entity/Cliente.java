@@ -1,102 +1,61 @@
 package com.projectjava.demosclient.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "clientes")
-public class Cliente implements Serializable {
+public class Cliente{
 
     @Id
+    @Column(name ="idclientes")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idclientes")
-    private Long idClientes;
+    private Long idCliente;
 
-    @Column(name = "nombre")
+    @Column(name ="nombre", length = 20)
     private String nombre;
 
-    @Column(name = "apellido")
+    @Column(name = "apellido", length = 20)
     private String apellido;
 
-    @Column(name = "numtel")
-    private String numTel;
 
-    @Column(name = "tipofactura")
-    private String tipoFactura;
+    @Column(name = "comentarios", length = 365)
+    private String comentarios;
 
-    @Column(name = "fecha")
-    //Temporal indica en que formato se va a guardar la fecha
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date fecha;
 
-    @Column(name = "descripcion")
-    private String descripcion;
+    @Column(name = "saldo_abonado", length = 30)
+    private String saldoAbonado;
 
-    @Column(name = "email", nullable = false)
-    private String email;
-    @Serial
-    private static final long serialVersionUID = 1L;
+    @Column(name = "saldo_deudor", length = 30)
+    private String saldoDeudor;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Marca> marcaList;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    List<Correo> correosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    List<PagoVenta> pagoVentasList;
-    public Cliente(){
-
+    @Column(name = "saldo_neto", length = 45)
+    private String saldoNeto;
+    public Cliente() {
     }
 
-    public Cliente(String nombre, String apellido, String email, String numtel, String tipofactura, String descripcion) {
-
+    public Cliente(Long idCliente, String nombre, String apellido, String comentarios, String saldoAbonado, String saldoDeudor) {
+        this.idCliente = idCliente;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.email = email;
-        this.numTel = numtel;
-        this.tipoFactura = tipofactura;
-        this.descripcion = descripcion;
-
-
-
+        this.comentarios = comentarios;
+        this.saldoAbonado = saldoAbonado;
+        this.saldoDeudor = saldoDeudor;
     }
 
-    public Cliente(Long id, String nombre, String apellido, String email, String numtel, String tipofactura, String descripcion) {
-        this.idClientes = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.numTel = numtel;
-        this.tipoFactura = tipofactura;
-        this.descripcion = descripcion;
+    public Long getIdCliente() {
+        return idCliente;
     }
 
-
-
-    @PrePersist
-private void prePersist(){
-    fecha = new Date();
-}
-
-    public Long getIdClientes() {
-        return idClientes;
+    public String getSaldoNeto() {
+        return saldoNeto;
     }
 
-    public void setIdClientes(Long idClientes) {
-        this.idClientes = idClientes;
+    public void setSaldoNeto(String saldoNeto) {
+        this.saldoNeto = saldoNeto;
+    }
+
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getNombre() {
@@ -115,53 +74,27 @@ private void prePersist(){
         this.apellido = apellido;
     }
 
-    public String getNumTel() {
-        return numTel;
+    public String getComentarios() {
+        return comentarios;
     }
 
-    public void setNumTel(String numTel) {
-        this.numTel = numTel;
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
     }
 
-    public String getTipoFactura() {
-        return tipoFactura;
+    public String getSaldoAbonado() {
+        return saldoAbonado;
     }
 
-    public void setTipoFactura(String tipoFactura) {
-        this.tipoFactura = tipoFactura;
+    public void setSaldoAbonado(String saldoAbonado) {
+        this.saldoAbonado = saldoAbonado;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public String getSaldoDeudor() {
+        return saldoDeudor;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public void setSaldoDeudor(String saldoDeudor) {
+        this.saldoDeudor = saldoDeudor;
     }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    //El orderBY lo que hace es ordenar de manera descendente todas las fechas
-    @OrderBy(value = "fecha DESC")
-    public Date getFecha() {
-        return fecha;
-    }
-
-     /*public void agregarBanco(Banco banco){
-       bancoSet.add(banco);
-    }
-    public void agregarTipoCambio(TipoCambio tipoCambio){
-        tipoCambioSet.add(tipoCambio);
-    }
-*/
 }

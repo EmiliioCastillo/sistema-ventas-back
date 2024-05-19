@@ -11,19 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class UserExcelImport {
-    public HashSet<Productos> excelImport(MultipartFile file) {
-        HashSet<Productos> listProductos = new HashSet<>();
-        long id = 0;
-        String codigo = "";
-        String descripcion = "";
-        String categoria = "";
-        String almacen = "";
+    public Set<Productos> excelImport(MultipartFile file) {
+        Set<Productos> listProductos = new HashSet<>();
 
 
         FileInputStream inputStream;
@@ -31,6 +23,7 @@ public class UserExcelImport {
             XSSFWorkbook workbook = XSSFWorkbookFactory.createWorkbook(OPCPackage.open(new ByteArrayInputStream(file.getBytes())));
             Sheet firstSheet = workbook.getSheetAt(0);
             Iterator<Row> rowIterator = firstSheet.iterator();
+            Productos productos = new Productos();
             rowIterator.next();
 
             while (rowIterator.hasNext()) {
@@ -40,13 +33,16 @@ public class UserExcelImport {
                     Cell nextCell = cellIterator.next();
                     int columnIndex = nextCell.getColumnIndex();
                     switch (columnIndex) {
-                        case 0 -> id = (long) nextCell.getNumericCellValue();
-                        case 1 -> codigo = nextCell.getStringCellValue();
-                        case 2 -> descripcion = nextCell.getStringCellValue();
-                        case 3 -> categoria = nextCell.getStringCellValue();
-                        case 4 -> almacen = nextCell.getStringCellValue();
+
+                        case 1 -> productos.setCodigo(nextCell.getStringCellValue());
+                        case 2 -> productos.setProducto(nextCell.getStringCellValue());
+                        case 3 -> productos.setCategoria(nextCell.getStringCellValue());
+                        case 4 ->productos.setDescripcion(nextCell.getStringCellValue());
+                        case 5 -> productos.setPrecio(nextCell.getStringCellValue());
+                        case 6 -> productos.setCantidad(nextCell.getStringCellValue());
+                        case 7 -> productos.setEstatus(nextCell.getStringCellValue());
                     }
-                    listProductos.add(new Productos(id, codigo, descripcion, categoria, almacen));
+                    listProductos.add(productos);
                 }
             }
 

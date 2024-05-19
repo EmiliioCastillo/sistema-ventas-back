@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/layout :: head}"></head>
+<h1 class="text secondary border border-success" th:text="${titulo}"></h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<meta charset="UTF-8"/>
+<body>
+
+<header th:replace="~{layout/layout :: header}"></header>
+<div class="container py-4">
+    <div class="card bg-light">
+        <div class="card-body">
+
+
+
+
+            <h4 class="card-title"><p>LISTADO CLIENTES</p>
+                <a th:href="@{/crear}" class="btn btn-info" >Crear cliente</a>
+            </h4>
+            <table class="table">
+                <div>
+                    <form class="form-inline" th:action="@{/listar}">
+                        <div class="form-group mb-2">
+                            <input type="text" class="form-control" name="palabraClave" id="palabraClave" th:value="${palabraClave}" placeholder="Buscar por nombre o tipo de factura">
+                        </div>
+                        &nbsp;
+                        <input type="submit" class="btn btn-primary mb-3" value="Buscar">
+
+                    </form>
+
+                </div>
+                <thead>
+                <tr>
+                    <th>ID: </th>
+                    <th>NOMBRE: </th>
+                    <th>APELLIDO: </th>
+                    <th>EMAIL: </th>
+                    <th>FECHA: </th>
+                    <th>NUMERO: </th>
+                    <th>TIPO DE FACTURA: </th>
+                </tr>
+                </thead>
+                <!--
+                El each lo que hace es iterar por cada cliente que ingresa a la lista, va a ir agregando ids
+                el "clientes" es el atributo que pasamos en el model
+
+                2) Importante tener los getter para poder invocar los valores
+                -->
+                <tbody>
+                <tr th:each="cliente: ${clientes}">
+                    <td><a class="btn btn-dark" th:href="@{/ver/} + ${cliente.id}" th:text="${cliente.id}"></a></td>
+                    <td th:text="${cliente.nombre}"></td>
+                    <td th:text="${cliente.apellido}"></td>
+                    <td th:text="${cliente.email}"></td>
+                    <td th:text="${cliente.fecha}"></td>
+                    <td th:text="${cliente.numtel}"></td>
+                    <td th:text="${cliente.tipofactura}"></td>
+                    <td><a th:href="@{/crear/} + ${cliente.id}" class="btn btn-warning" th:text="editar"></a></td>
+                    <td><a th:href="@{/eliminar/} + ${cliente.id}" class="btn btn-info" th:text="eliminar" ></a></td>
+                    <td><a class="btn btn-info" th:href="@{/ver/} + ${cliente.id}"th:text="informacion"></a></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <nav th:replace="~{paginator-nav :: pagination}">
+
+            </nav>
+        </div>
+    </div>
+</div>
+</body>
+
+
+
+</html>

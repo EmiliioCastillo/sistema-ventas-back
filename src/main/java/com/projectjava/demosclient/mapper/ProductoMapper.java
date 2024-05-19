@@ -1,32 +1,43 @@
 package com.projectjava.demosclient.mapper;
 
-import com.projectjava.demosclient.dto.ProductosDto;
+
+import com.projectjava.demosclient.dto.ProductosDTO;
 import com.projectjava.demosclient.entity.Productos;
 
 public class ProductoMapper {
 
 
-    // Convert User JPA Entity into UserDto
-    public static ProductosDto mapToProductDto(Productos product){
-        ProductosDto productDto = new ProductosDto(
+    // Convertir la entidad a dto para transferir datos
+    public static ProductosDTO mapToProductDto(Productos product){
+        ProductosDTO productDto = new ProductosDTO(
                 product.getIdProductos(),
                 product.getCodigo(),
                 product.getDescripcion(),
                 product.getCategoria(),
-                product.getAlmacen()
+                product.getProducto(),
+                product.getPrecio(),
+                product.getCantidad(),
+                product.getEstatus(),
+                product.getFechaEntrega(),
+                product.getProveedor()
         );
         return productDto;
     }
 
 
-    // Convert UserDto into User JPA Entity
-    public static Productos mapToProduct(ProductosDto productDto){
+    //Convertir el dto a entity
+    public static Productos mapToProduct(ProductosDTO productDto){
         Productos product = new Productos(
-                productDto.getId(),
+                productDto.getIdProductos(),
                 productDto.getCodigo(),
                 productDto.getDescripcion(),
                 productDto.getCategoria(),
-                productDto.getAlmacen()
+                productDto.getProducto(),
+                productDto.getPrecio(),
+                productDto.getCantidad(),
+                productDto.getEstatus(),
+                productDto.getFechaEntrega(),
+                productDto.getProveedor()
         );
         return product;
     }

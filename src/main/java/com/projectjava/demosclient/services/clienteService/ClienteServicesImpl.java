@@ -4,67 +4,92 @@ package com.projectjava.demosclient.services.clienteService;
 import com.projectjava.demosclient.dao.ClienteDao;
 import com.projectjava.demosclient.entity.Cliente;
 
+import com.projectjava.demosclient.entity.Productos;
+import com.projectjava.demosclient.entity.Proveedor;
+import jakarta.persistence.PersistenceException;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
+import org.hibernate.HibernateException;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 @Service
 public class ClienteServicesImpl implements ClienteServices {
-    private static final Logger logger = LoggerFactory.getLogger(ClienteServicesImpl.class);
+
 @Autowired
 ClienteDao clienteDao;
 
     @Override
-    public Page<Cliente> findByDescripcionAndTipoFactura(String descripcion, String tipoFactura, int size, int page) {
-        Pageable pageable = PageRequest.of(page, size);
-        logger.info("findByDescripcionAndTipoFactura - Size: {}, Page: {}, Descripcion: {}, TipoFactura: {}", size, page, descripcion, tipoFactura);
-        if (descripcion != null || tipoFactura != null) {
-            Specification<Cliente> spec = Specification.where(null);
+    public Page<Cliente> findByNombre(String nombre, int page, int size) {
+        try {
+            Pageable pageable = PageRequest.of(page, size);
 
-            if (descripcion != null) {
-                spec = spec.and((root, query, criteriaBuilder) ->
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get("descripcion")), "%" + descripcion.toLowerCase() + "%"));
-            }
+            Specification<Cliente> specification = (root, query, builder) -> {
+                query.distinct(true);
+                List<Predicate> predicates = new ArrayList<>();
 
-            if (tipoFactura != null) {
-                spec = spec.and((root, query, criteriaBuilder) ->
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get("tipoFactura")), "%" + tipoFactura.toLowerCase() + "%"));
-            }
-            return clienteDao.findAll(spec, pageable);
-        } else {
-            return clienteDao.findAll(pageable);
+                if (nombre != null) {
+                    predicates.add(builder.equal(root.get("nombre"), nombre));
+                }
+                // Aplica las condiciones al query usando query.where(...)
+                query.where(builder.and(predicates.toArray(new Predicate[0])));
+
+                return null; // No necesitas devolver nada aquí
+            };
+
+            return clienteDao.findAll(specification, pageable);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Error al consultar cliente: " + e.getMessage());
+            throw new RuntimeException("Error al consultar cliente: " + e.getMessage(), e);
         }
     }
 
+
     @Override
-    public Page<Cliente> findAll(int page, int size) {
-        Pageable pageableBancos = PageRequest.of(page, size);
-        return clienteDao.findAll(pageableBancos);
+    public Set<String> findAllNombreClientes() {
+        List<Cliente> listaClientes = clienteDao.findAll(Sort.by(Sort.Direction.ASC, "nombre"));
+        Set<String> listaClientesNombres = new HashSet<>();
+        for (Cliente cliente : listaClientes) {
+            listaClientesNombres.add(cliente.getNombre());
+        }
+        return listaClientesNombres;
+    }
+    @Override
+    public ResponseEntity<String> save(Cliente cliente) {
+        try{
+            clienteDao.save(cliente);
+            return ResponseEntity.ok("{\"response\": \"200\"}");
+
+        } catch (HibernateException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar registro");
+
+        } catch (PersistenceException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar registro");
+
+        }
+
     }
 
     @Override
-    @Transactional
-    public Cliente save(Cliente cliente) {
-      return  clienteDao.save(cliente);
-    }
-
-    @Override
-    @Transactional
     public Optional<Cliente> findById(Long id) {
         return clienteDao.findById(id);
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         clienteDao.deleteById(id);
     }

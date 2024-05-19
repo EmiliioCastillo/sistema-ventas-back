@@ -1,21 +1,32 @@
 package com.projectjava.demosclient.services.userService;
-/*
-import com.projectjava.demosclient.dao.UserDao;
-import com.projectjava.demosclient.dto.UsuarioDTO;
+
+import com.projectjava.demosclient.entity.Rol;
 import com.projectjava.demosclient.entity.Usuario;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
-    List<Usuario> findAll();
-    public void save(UsuarioDTO usuario);
-    public void editUser(Long id);
-        public void deleteUser(Long id);
+ Page<Usuario> findAll(int page, int size);
+
+ ResponseEntity<String> save(Usuario usuario);
+
+    Optional<Usuario> findById(Long id);
+
+    public ResponseEntity<String> enviarEmail(String email);
+    Map<Long, Rol> listaRolesString();
+    List<Rol> findAllRoles();
+    void deleteById(Long id);
+
+    ResponseEntity<String> validarToken(String token);
+     ResponseEntity<String> actualizarContraseña(String email, String nuevaContraseña);
 }
 
 
-*/
+

@@ -1,57 +1,19 @@
 package com.projectjava.demosclient.controllers;
 
 
-import com.projectjava.demosclient.entity.Proveedor;
+import com.projectjava.demosclient.dto.ProveedorDTO;
 import com.projectjava.demosclient.services.proveedorService.ProveedorServices;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-/*
-@RequestMapping("")
-@Controller
-public class ProveedorController {
-    @Autowired
-    ProveedorServices proveedorServices;
 
-
-
-    @GetMapping("/listarproveedores")
-    public String listarProveedores(Model model){
-
-        List<Proveedor> listProveedores = proveedorServices.listSupplier();
-
-        model.addAttribute("proveedor", listProveedores);
-
-        return "/listarproveedores";
-    }
-
-    @RequestMapping("/crearproveedor")
-    public String crear(Map<String, Object> model){
-        Proveedor proveedor = new Proveedor();
-        model.put("proveedor", proveedor);
-        return "/crearproveedor";
-    }
-    @PostMapping("/crearproveedor")
-    public String crearProducto(Proveedor proveedor){
-       proveedorServices.save(proveedor);
-
-        return "redirect:/listarproveedores";
-    }
-
-}
-*/
-
-
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST})
 @RestController
 @RequestMapping("/api/v1/proveedores")
 public class ProveedorController{
@@ -61,50 +23,68 @@ public class ProveedorController{
     ProveedorServices proveedorServices;
 
     @GetMapping("/all")
-    public ResponseEntity<?> findAllSupplier(){
-        try {
-            Iterable<Proveedor> listSupplier = proveedorServices.findAll();
-            // Log para verificar si se está ejecutando y la lista se recupera correctamente
-            log.info("ProveedorController - findAllSupplier: List size = {}", ((Collection<?>) listSupplier).size());
-            return ResponseEntity.ok().body(listSupplier);
-        } catch (Exception e) {
-            // Log para imprimir cualquier excepción que pueda ocurrir
-            log.error("ProveedorController - findAllSupplier: Error occurred", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    public ResponseEntity<?> buscarTodosProveedores(@RequestParam(name = "limit", defaultValue = "0") int page,
+                                                    @RequestParam(name = "offset", defaultValue = "25") int size,
+                                                    @RequestParam(required = false) String nombre,
+                                                    @RequestParam(required = false) String estatus){
+        Page<ProveedorDTO> proveedores;
+        proveedores = proveedorServices.findAll(nombre,estatus,  page, size);
+        return ResponseEntity.ok(proveedores);
     }
 
 
 
-    @GetMapping("/edit/{id}")
-    public ResponseEntity<?> editSupplier(@PathVariable(value = "id") Long id, @RequestBody Proveedor supplierBody) {
 
-        Optional<Proveedor> supplierDb = proveedorServices.findById(id);
-
-        if(supplierDb.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        //Seteamos y rellenamos los datos del producto, el @RequestBody del parametro inicial
-        //Permite que podamos deserializar y rellenar el cuerpo del alumno
-        Proveedor supplier  = supplierDb.get();
-        supplier.setIdProveedor(supplierBody.getIdProveedor());
-        supplier.setNombre(supplierBody.getNombre());
-        supplier.setNumTransferencia(supplierBody.getNumTransferencia());
-
-        return ResponseEntity.ok().body(proveedorServices.save(supplier));
+    @GetMapping("/proveedorProducto")
+    public ResponseEntity<?> buscarProveedorConProducto(@RequestParam(name = "limit", defaultValue = "0") int page,
+                                                        @RequestParam(name = "offset", defaultValue = "25") int size,
+                                                        @RequestParam(required = false) String nombre,
+                                                        @RequestParam(required = false) String producto,
+                                                        @RequestParam(required = false) String estatus){
+        return ResponseEntity.ok(proveedorServices.listarProveedoresConProductos(nombre, producto,estatus, page, size));
     }
+
+    @GetMapping("/traerNombreProveedores")
+    public ResponseEntity<?> nombreProveedores(){
+        return ResponseEntity.ok(proveedorServices.findAllNombreProveedores());
+    }
+
+
+
+    @PutMapping("edit/{id}")
+    public ResponseEntity<?> actualizarProveedor(@PathVariable Long id,
+                                                 @Valid @RequestBody ProveedorDTO proveedor){
+        Optional<ProveedorDTO> optionalProveedor = proveedorServices.buscarProveedoresPorId(id);
+
+        if(!optionalProveedor.isPresent()){
+            return ResponseEntity.notFound().build(); // Cambiado a notFound() en lugar de unprocessableEntity()
+        }
+
+        ProveedorDTO proveedorExistente = optionalProveedor.get();
+        proveedorExistente.setIdProveedor(id);
+        proveedorExistente.setNombre(proveedor.getNombre());
+        proveedorExistente.setDireccion(proveedor.getDireccion());
+        proveedorExistente.setEmail(proveedor.getEmail());
+        proveedorExistente.setTelefono(proveedor.getTelefono());
+        proveedorExistente.setEstatus(proveedor.getEstatus());
+        proveedorExistente.setNumeroTributario(proveedor.getNumeroTributario());
+
+        ResponseEntity<String> respuesta = proveedorServices.actualizarProveedor(proveedorExistente);
+
+        return ResponseEntity.ok(respuesta.getBody()); // Devuelve el cuerpo de la respuesta de proveedorServices.save()
+    }
+
 
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<?> find(@PathVariable(value = "id") Long id){
-        Optional<Proveedor> products = proveedorServices.findById(id);
-        return ResponseEntity.ok(products.get());
+    public ResponseEntity<?> BuscarId(@PathVariable(value = "id") Long id){
+        Optional<ProveedorDTO> OptionalProveedores = proveedorServices.buscarProveedoresPorId(id);
+        return ResponseEntity.ok(OptionalProveedores.get());
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveSupplier(Proveedor proveedor ){
-        Proveedor supplierEntity = proveedorServices.save(proveedor);
-        return ResponseEntity.status(HttpStatus.CREATED).body(supplierEntity);
+    public ResponseEntity<?> guardarProveedor( @RequestBody ProveedorDTO proveedor ){
+       return proveedorServices.save(proveedor);
     }
 
 
@@ -113,7 +93,7 @@ public class ProveedorController{
 
         proveedorServices.deleteById(id);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("{\"response\": \"200\"}");
     }
 
 }

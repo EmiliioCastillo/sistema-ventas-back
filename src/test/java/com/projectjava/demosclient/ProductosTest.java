@@ -12,7 +12,7 @@ import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -34,35 +34,35 @@ public class ProductosTest {
 
 
     @Test
-    public void añadirProducto() {
-Productos producto2 = new Productos(2L, 2323, "PEDIGREE", "FORRAJERIA", "LOS CANES");
-
-        productoDao.save(producto2);
-    }
-
-    @Test
-    public void añadirProveedor() {
-        Proveedor proveedor1 = new Proveedor("2231232232", "JOSE");
-        proveedorDao.save(proveedor1);
-    }
-
-    @Test
     public void listarProductos() {
         List<Productos> productosList = productoDao.findAll();
 
         productosList.forEach(System.out::println);
     }
 
-
+/*
     @Test
     public void añadirCliente() {
         Cliente cliente = new Cliente(19L,"Emilio", "Carrasco", "example@gmail.com", "22233122"
                 , "FACTURA A", "CUCHILLO");
         clienteDao.save(cliente);
-
-
     }
+    */
+    @Test
+    public void testObtenerProveedor() {
+        // Crear un producto
+        Productos producto = new Productos();
 
+        // Obtener el proveedor del producto
+        Proveedor proveedor = producto.getProveedor();
+
+        // Verificar si el proveedor es nulo
+        assertNotNull(proveedor, "El proveedor no debería ser nulo");
+        assertNull(proveedor, "Si es nulo");
+        // Realizar más acciones de prueba con el proveedor si es necesario
+        System.out.println("Nombre del proveedor: " + proveedor.getNombre());
+        // Agregar más verificaciones según sea necesario
+    }
 
 
 

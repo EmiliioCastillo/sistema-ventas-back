@@ -1,6 +1,8 @@
 package com.projectjava.demosclient.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projectjava.demosclient.security.UserRoleEnum;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -20,24 +22,14 @@ public class Rol {
     @Column(name = "nombre_rol", length=45)
     private String nombrerol;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol")
-    List<Usuario> usuario;
+
 
     public Rol() {
     }
 
-    public Rol(Long id, String nombrerol) {
-        this.id = id;
-        this.nombrerol = nombrerol;
-
-    }
 
     public Rol(Long id) {
         this.id = id;
-    }
-
-    public Rol(String nombrerol) {
-        this.nombrerol = nombrerol;
     }
 
     public String getNombrerol() {

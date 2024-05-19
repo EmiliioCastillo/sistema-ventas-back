@@ -1,13 +1,17 @@
 package com.projectjava.demosclient.entity;
 
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.io.Serializable;
+import java.util.*;
+
+
 
 @Entity
 @Table(name = "productos")
@@ -27,26 +31,86 @@ public class Productos {
     @Column(name = "categoria")
     private String categoria;
 
-    @Column(name = "almacen")
-    private String almacen;
+    @Column(name = "producto")
+    private String producto;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
-    List<Inventario> inventarioList;
+    @Column(name = "precio")
+    private String precio;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
-    List<PagoVenta> pagoVentasList;
 
+    @Column(name = "cantidad")
+    private String cantidad;
+
+
+    @Column(name = "estatus")
+    private String estatus;
+
+    @Column(name = "fechaEntrega")
+    private Date fechaEntrega;
+
+
+    @ManyToOne(fetch = FetchType.LAZY , optional = false)
+    @JoinColumn(name = "proveedores_id_proveedor")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Proveedor proveedor;
 
     public Productos(){
 
     }
-    public Productos(Long id, String codigo, String descripcion, String categoria, String almacen ){
-        this.idProductos = id;
+
+    public Productos(Long idProductos, String codigo, String descripcion, String categoria, String producto, String precio, String cantidad, String estatus, Date fechaEntrega, Proveedor proveedor) {
+        this.idProductos = idProductos;
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.categoria = categoria;
-        this.almacen = almacen;
+        this.producto = producto;
+        this.precio = precio;
+        this.cantidad = cantidad;
+        this.estatus = estatus;
+        this.fechaEntrega = fechaEntrega;
+        this.proveedor = proveedor;
+    }
 
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
+
+    @ManyToOne
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
+    }
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
     }
 
     public Long getIdProductos() {
@@ -81,8 +145,8 @@ public class Productos {
         this.categoria = categoria;
     }
 
-    public String getAlmacen() {
-        return almacen;
+    public String getProducto() {
+        return producto;
     }
 
 
@@ -93,8 +157,8 @@ public class Productos {
 
     */
 
-    public void setAlmacen(String almacen) {
-        this.almacen = almacen;
+    public void setProducto(String producto) {
+        this.producto = producto;
     }
 
 
@@ -105,7 +169,7 @@ public class Productos {
                 ", codigo=" + codigo +
                 ", descripcion='" + descripcion.toString() + '\'' +
                 ", categoria='" + categoria.toString() + '\'' +
-                ", almacen='" + almacen.toString() + '\'' +
+                ", producto='" + producto.toString() + '\'' +
                 '}';
     }
 }
