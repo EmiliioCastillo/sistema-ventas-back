@@ -1,5 +1,4 @@
-# Gestion-Inventario
-Sistema para gestionar inventario con Spring-Java, implementando JPA, Hibernate, MYSQL, Spring Security.
+# Sistema de ventas y gestion de inventario
 
  Productos:
 El sistema cuenta con el menú de productos donde podremos cargar nuestros productos. Dentro del menú encontraremos dos formas de cargar los productos:
@@ -24,6 +23,17 @@ Catalogo que permite llevar los gastos al dia, con filtros adaptables por calend
 📌 Sub-seccion Movimiento:
 Este modulo es para llevar reporte en tiempo real de los movimientos que se han realizado, quienes son los usuarios que lo han hecho y que es lo que han movido.
 
+📌 Balances Y monitoreo:
+La aplicaicon tiene un modulo principal donde se visualiza diferentes score-cards permitiendo llevar un balance diario y anual de los gastos, ventas y promedios que se han llevado a cabo.
+
+📌 Pagos:
+La aplicacion cuenta con un modulo donde permite que el usuario con el ROL "Dueño", pueda gestionar un pago mediante la plataforma "mercado-pago" haciendo uso de la API externa de la misma.
+
+
+📌 Seccion Roles:
+Esta seccion le pertenece exclusivamente al "Dueño" puesto que es el unico con la capacidad de renovar la contraseña de un empleado si es que este pierde la misma, asi mismo dotarlo de capacidad para crear nuevos usuarios en caso de que contrate nuevos empleados.
+
+
 📌 Salidas:
 Dentro del menú encontraremos múltiples opciones para la gestión de las salidas:
     
@@ -45,9 +55,8 @@ Dentro del menú de configuración encontraremos las siguiente opciones:
 1.Usuarios:
 Tendremos un formulario el cual nos permite crear usuarios y asignarles el rol correspondiente dentro del sistema.
 
-2. Contacto:
-Seccion para contactar dejando mensaje y enviando a respectivo usuario.
 
 Características del sistema:
 El sistema se encuentra desarrollado con el lenguaje de programación Java, utilizando Spring Framework, Spring Security  y se ha utilizado MYSQL como gestor de base de datos.
+
 
