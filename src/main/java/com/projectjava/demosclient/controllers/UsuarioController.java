@@ -70,14 +70,7 @@ public class UsuarioController {
     public ResponseEntity<?> traerRolesUsuarios(){
         return ResponseEntity.ok().body(userService.findAllRoles());
     }
-    @PostMapping("/registro")
-    public ResponseEntity<AuthResponse> registroUsuario(@RequestBody RegistroDTO datos) {
-        try {
-            return ResponseEntity.ok(authServices.registroUsuarios(datos));
-        } catch (RuntimeException e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
+
 
 
     @GetMapping("/enviarEmail")

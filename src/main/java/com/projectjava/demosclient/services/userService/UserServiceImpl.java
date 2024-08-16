@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
                     // Verificar si el token ha expirado
                     if (tiempoTranscurrido <= periodoExpiracion) {
                         // Realizar la validación y retornar la respuesta exitosa
-                        // Tu lógica de validación aquí...
+                        
                         return ResponseEntity.ok("{\"response\": \"200\", \"email\": \"" + emailDB + "\"}");
                     } else {
                         // El token ha expirado

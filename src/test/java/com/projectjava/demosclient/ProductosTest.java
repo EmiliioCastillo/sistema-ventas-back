@@ -50,18 +50,13 @@ public class ProductosTest {
     */
     @Test
     public void testObtenerProveedor() {
-        // Crear un producto
         Productos producto = new Productos();
-
-        // Obtener el proveedor del producto
         Proveedor proveedor = producto.getProveedor();
-
-        // Verificar si el proveedor es nulo
         assertNotNull(proveedor, "El proveedor no debería ser nulo");
         assertNull(proveedor, "Si es nulo");
-        // Realizar más acciones de prueba con el proveedor si es necesario
+       
         System.out.println("Nombre del proveedor: " + proveedor.getNombre());
-        // Agregar más verificaciones según sea necesario
+      
     }
 
 

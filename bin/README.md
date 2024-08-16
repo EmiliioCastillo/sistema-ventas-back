@@ -30,12 +30,7 @@ Nos permite buscar el detalle de una salida especifica y poder exportar el detal
 Dentro del inventario tendremos la carga de aquellos proveedores que hayan ingresado diferentes productos, los movimientos, los costos e impuestos que se han
 puesto en el proceso de transaccion entre el producto y el proveedor.
 
-CATALOGO-MARCAS
-📌Este catalogo puede permitir ver los clientes que utilizaron determinada tarjeta con su servicio para poder visualizar el lote y el cupo.
 
- 
-CATALOGO CLIENTES-TIPO DE CAMBIO
-📌Este catalogo va a mostrar con que abonaron los clientes, en dolares o en pesos.
 
 📌 Configuración:
 
@@ -51,4 +46,3 @@ Características del sistema:
 El sistema se encuentra desarrollado con el lenguaje de programación Java, utilizando Spring Framework, Spring Security  y se ha utilizado MYSQL como gestor de base de datos.
 
 Se ha utilizado el tipico patron SPRING MVC, THYMELEAF para su desarrollo por motivos puramente practicos
--> V-1.2 La aplicacion a migrado a una arquitectura de tipo REST, utilizando diferentes tecnologias para el front-end. Como lo es React.js mejorando aspectos visuales y tecnicos para una mejor experiencia del usuario.

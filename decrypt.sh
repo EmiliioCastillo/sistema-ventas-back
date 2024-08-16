@@ -9,7 +9,8 @@ fi
 
 PASSWORD_ENCRIPTADOR="$1"
 VALOR_ENCRIPTADO="$2"
-mvnw_output=$(/home/emilio-linux/Escritorio/Gestion-Inventario/mvnw jasypt:decrypt-value -Djasypt.encryptor.password=${PASSWORD_ENCRIPTADOR} -Djasypt.plugin.value=${VALOR_ENCRIPTADO} 2>&1)
+mvnw_output=$(/home/emilio-linux/Escritorio/Gestion-Inventario/mvnw jasypt:decrypt-value 
+-Djasypt.encryptor.password=${PASSWORD_ENCRIPTADOR} -Djasypt.plugin.value=${VALOR_ENCRIPTADO} 2>&1)
 
 
 if [ $? -ne 0 ]; then

@@ -67,9 +67,11 @@ com/projectjava/demosclient/mapper/ProductoMapper.class
 com/projectjava/demosclient/dto/RegistroDTO$RegistroDTOBuilder.class
 com/projectjava/demosclient/services/clienteService/ClienteServicesImpl.class
 com/projectjava/demosclient/services/ventaService/VentasServicesImpl.class
+com/projectjava/demosclient/dto/ProductosDto.class
 com/projectjava/demosclient/services/userService/UserService.class
 com/projectjava/demosclient/dao/GastosDao.class
 com/projectjava/demosclient/dao/ClienteDao.class
+com/projectjava/demosclient/entity/Inventario.class
 com/projectjava/demosclient/dto/RegistroDTO.class
 com/projectjava/demosclient/services/proveedorService/ProveedorServices.class
 com/projectjava/demosclient/security/UserRoleEnum.class

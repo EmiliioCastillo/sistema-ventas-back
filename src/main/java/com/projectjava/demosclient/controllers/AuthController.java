@@ -47,6 +47,14 @@ public ResponseEntity<?> findAll(){
     public ResponseEntity<?> validarToken(@RequestParam("token") String token){
         return userService.validarToken(token);
     }
+    @PostMapping("/registro")
+    public ResponseEntity<AuthResponse> registroUsuario(@RequestBody RegistroDTO datos) {
+        try {
+            return ResponseEntity.ok(authServices.registroUsuarios(datos));
+        } catch (RuntimeException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
     @PostMapping("/actualizarPassword")

@@ -1,5 +1,5 @@
-/home/emilio-linux/Escritorio/Gestion-Inventario/src/test/java/com/projectjava/demosclient/ProductosTest.java
-/home/emilio-linux/Escritorio/Gestion-Inventario/src/test/java/com/projectjava/demosclient/ProveedorProductosTest.java
-/home/emilio-linux/Escritorio/Gestion-Inventario/src/test/java/com/projectjava/demosclient/DemosclientApplicationTests.java
-/home/emilio-linux/Escritorio/Gestion-Inventario/src/test/java/com/projectjava/demosclient/security/SpringSecurityConfigurationTest.java
-/home/emilio-linux/Escritorio/Gestion-Inventario/src/test/java/com/projectjava/demosclient/UsuariosTest.java
+/home/emilio-linux/Escritorio/gestion-inventario-1.2/src/test/java/com/projectjava/demosclient/UsuariosTest.java
+/home/emilio-linux/Escritorio/gestion-inventario-1.2/src/test/java/com/projectjava/demosclient/ProductosTest.java
+/home/emilio-linux/Escritorio/gestion-inventario-1.2/src/test/java/com/projectjava/demosclient/DemosclientApplicationTests.java
+/home/emilio-linux/Escritorio/gestion-inventario-1.2/src/test/java/com/projectjava/demosclient/ProveedorProductosTest.java
+/home/emilio-linux/Escritorio/gestion-inventario-1.2/src/test/java/com/projectjava/demosclient/security/SpringSecurityConfigurationTest.java
