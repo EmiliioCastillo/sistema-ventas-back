@@ -1,5 +1,4 @@
-# Gestion-Inventario
-Sistema para gestionar inventario con Spring-Java, implementando JPA, Hibernate, MYSQL, Spring Security.
+# Sistema de ventas y gestion de inventario
 
  Productos:
 El sistema cuenta con el menú de productos donde podremos cargar nuestros productos. Dentro del menú encontraremos dos formas de cargar los productos:
@@ -12,17 +11,34 @@ Ingresaremos una lista de productos al sistema por medio de una carga de un arch
 
 
 📌 Clientes:
-Este menú nos permitirá tener un control de nuestros clientes. Aquí podremos crearlos, editarlos y eliminarlos.
+Este menú nos permitirá tener un control de nuestros clientes. Aquí podremos crearlos, editarlos y eliminarlos, visualizar la cuenta corriente que tienen y si adeudan o no, de esta forma el sistema hara el recuento solo de la deuda.
 
 📌 Proveedores:
-Al igual que el menú de clientes, el menú de Proveedores nos permitirá crear, editar y eliminar a nuestros posibles proveedores.
+Al igual que el menú de clientes, el menú de Proveedores nos permitirá crear, editar y eliminar a nuestros posibles proveedores, visualizar quien tiene cuenta corriente con nosotros. Este catalogo esta implicitamente relacionado con el de gastos, puesto que al momento de que un proveedor nos de productos sin que nosotros hayamos abonado todo en el mismo momento, el sistema hara un recuento negativo de ese gasto asociandolo con el proveedor.
+
+
+📌 Gastos:
+Catalogo que permite llevar los gastos al dia, con filtros adaptables por calendario y por busqueda manual.
+
+📌 Sub-seccion Movimiento:
+Este modulo es para llevar reporte en tiempo real de los movimientos que se han realizado, quienes son los usuarios que lo han hecho y que es lo que han movido.
+
+📌 Balances Y monitoreo:
+La aplicaicon tiene un modulo principal donde se visualiza diferentes score-cards permitiendo llevar un balance diario y anual de los gastos, ventas y promedios que se han llevado a cabo.
+
+📌 Pagos:
+La aplicacion cuenta con un modulo donde permite que el usuario con el ROL "Dueño", pueda gestionar un pago mediante la plataforma "mercado-pago" haciendo uso de la API externa de la misma.
+
+
+📌 Seccion Roles:
+Esta seccion le pertenece exclusivamente al "Dueño" puesto que es el unico con la capacidad de renovar la contraseña de un empleado si es que este pierde la misma, asi mismo dotarlo de capacidad para crear nuevos usuarios en caso de que contrate nuevos empleados.
 
 
 📌 Salidas:
 Dentro del menú encontraremos múltiples opciones para la gestión de las salidas:
     
 3.Buscar Salida:
-Nos permite buscar el detalle de una salida especifica y poder exportar el detalle en un documento PDF. 
+Nos permite buscar el detalle de una salida especifica y poder exportar el detalle en un documento PDF, importar un excel con los productos 
  
 
  📌 Inventario:
@@ -39,10 +55,8 @@ Dentro del menú de configuración encontraremos las siguiente opciones:
 1.Usuarios:
 Tendremos un formulario el cual nos permite crear usuarios y asignarles el rol correspondiente dentro del sistema.
 
-2. Contacto:
-Seccion para contactar dejando mensaje y enviando a respectivo usuario.
 
 Características del sistema:
 El sistema se encuentra desarrollado con el lenguaje de programación Java, utilizando Spring Framework, Spring Security  y se ha utilizado MYSQL como gestor de base de datos.
 
-Se ha utilizado el tipico patron SPRING MVC, THYMELEAF para su desarrollo por motivos puramente practicos
+
